@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+</HEAD>
+<BODY>
+<H1> Ceco Zadacha </H1>
+<div id="image-section">
+	<ul>
+		{% for image in images %}
+    	<li><a href="{{ url_for('view_comment', pic_name=image[1] ) }} "><img src="{{image[0]}}" id="image-styling"></a></li>
+    	{% endfor %}
+	</ul>
+</div>
+<div id="new-file">
+	<h1>Upload Image</h1>
+	<form enctype = "multipart/form-data" 
+                     action = "/cgi-bin/uploadfile.py" method = "post">
+   <p>File: <input type = "file" name = "filename" value = "filename" /></p>
+   <p><input type = "submit" value = "Upload" /></p>
+   </form>
+</div>
+
+</BODY>
+</HTML>
+

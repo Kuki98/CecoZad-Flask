@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+</head>
+<body>
+	<h1>Ceco Zadacha</h1>
+	<p>Picture 1</p>
+	<p><a href="{{ url_for('index') }}" >Browse other images</a></p>
+	<div id = "ImageContainer">
+		<img src= "{{ url_for('static', filename='pic1.jpg') }}" />
+	</div>
+	<div id = "CommentContainer">
+		<div id = "CommentEnter">
+			<form action= "{{ url_for('update_comment') }}" method= "post">
+				<P> New Comment:</P>
+				<input type = "text" name= "new_comment" id="new_comment"/><br><br>
+				<input type = "hidden" name="image-id" value=1>
+				<button type = "submit" name="edit_value" value="{{ edit_value }}">Submit</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
