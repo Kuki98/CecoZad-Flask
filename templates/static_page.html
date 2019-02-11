@@ -12,7 +12,8 @@
 	<div id = "CommentContainer">
 		<div id = "CommentShow" >
 			{% for name in names %}
-				<p>{{name[0]}}
+				<p>{% if name[2] == pic_name %}
+					{{name[0]}}
 					<form action="{{ url_for('delete_comment', pic_name=pic_name) }}" method="POST">
 						<button type="submit" name="delete_comment" value={{ name[1] }} id="delete-button">X</button>
 					</form>
@@ -20,13 +21,14 @@
 						<button type="submit" name="edit_comment" value={{ name[1] }} id="edit-button">Edit</button>
 					</form>
 				</p><br>
+				{% endif %}
 			{% endfor %}
 		</div>
 		<div id = "CommentEnter">
 			<form action= "{{ url_for('submit_comment', pic_name=pic_name) }}" method= "post">
 				<P>Comments:</P>
 				<input type = "text" name= "comment" id="comment"/><br><br>
-				<input type = "hidden" name="image-id" value=3>
+				<input type = "hidden" name="image-name" value={{ pic_name }}>
 				<input type = "submit" value="Submit">
 			</form>
 		</div>

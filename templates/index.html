@@ -14,13 +14,12 @@
 </div>
 <div id="new-file">
 	<h1>Upload Image</h1>
-	<form enctype = "multipart/form-data" 
-                     action = "/cgi-bin/uploadfile.py" method = "post">
-   <p>File: <input type = "file" name = "filename" value = "filename" /></p>
-   <p><input type = "submit" value = "Upload" /></p>
+	<form enctype = "multipart/form-data" action = "{{ url_for('upload_file') }}" method = "POST">
+   		<p>File: 
+   			<input type = "file" name = "image_upload" value = "image_upload" /></p>
+   		<p>	<button type = "submit" name="submit_file" value = "submit_file">Submit</button></p>
    </form>
 </div>
-
 </BODY>
 </HTML>
 

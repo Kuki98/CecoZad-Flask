@@ -7,14 +7,14 @@
 	<p>Picture 1</p>
 	<p><a href="{{ url_for('index') }}" >Browse other images</a></p>
 	<div id = "ImageContainer">
-		<img src= "{{ url_for('static', filename='pic1.jpg') }}" />
+		<img src= "{{ '/static/' + pic_name }}" />
 	</div>
 	<div id = "CommentContainer">
 		<div id = "CommentEnter">
-			<form action= "{{ url_for('update_comment') }}" method= "post">
+			<form action= "{{ url_for('update_comment', pic_name=pic_name) }}" method= "post">
 				<P> New Comment:</P>
 				<input type = "text" name= "new_comment" id="new_comment"/><br><br>
-				<input type = "hidden" name="image-id" value=1>
+				<input type = "hidden" name="image-name" value={{ pic_name }}>
 				<button type = "submit" name="edit_value" value="{{ edit_value }}">Submit</button>
 			</form>
 		</div>
