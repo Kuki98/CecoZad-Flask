@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
-	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
 </HEAD>
 <BODY>
 <H1> Ceco Zadacha </H1>
 <div id="image-section">
-	<ul>
-		{% for image in images %}
-    	<li><a href="{{ url_for('view_comment', pic_name=image[1] ) }} "><img src="{{image[0]}}" id="image-styling"></a></li>
-    	{% endfor %}
-	</ul>
+    <ul>
+        {% for image in images %}
+            <li><a href="{{ url_for('view_comment', pic_id=image[0] ) }} "><img src="{{ image[1] }}" id="image-styling"></a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 <div id="new-file">
-	<h1>Upload Image</h1>
-	<form enctype = "multipart/form-data" action = "{{ url_for('upload_file') }}" method = "POST">
-   		<p>File: 
-   			<input type = "file" name = "image_upload" value = "image_upload" /></p>
-   		<p>	<button type = "submit" name="submit_file" value = "submit_file">Submit</button></p>
-   </form>
+    <h1>Upload Image</h1>
+    <form enctype="multipart/form-data" action="{{ url_for('upload_file') }}" method="POST">
+        <p>File:
+            <input type="file" name="image_upload" value="image_upload" /></p>
+        <p>
+            <button type="submit" name="submit_file" value="submit_file">Submit</button>
+        </p>
+    </form>
 </div>
 </BODY>
 </HTML>
