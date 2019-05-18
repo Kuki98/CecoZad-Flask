@@ -1,71 +1,84 @@
 #!/home/pr0phet/anaconda3/bin/python3
 from flask import Flask, request, render_template, redirect, url_for
 import mysql.connector
+import os
 
+app_path = os.getcwd()
+images_path = '/static/uploads/'
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="navi98%",
-    database="DB_work"
+    password="root",
+    database="kuki",
+    port="23306"
 )
 cursor = db.cursor()
 
 app = Flask(__name__)
+
+
 @app.route('/')
 @app.route('/index')
 def index():
-	query="SELECT img_path, img_name\
-			FROM imageTable"
-	cursor.execute(query)
-	return render_template('index.html', images=cursor)
+    query = "SELECT id, path, name FROM images"
+    cursor.execute(query)
+    return render_template('index.html', images=cursor)
 
-@app.route('/<pic_name>')
-def view_comment(pic_name):
-	query= 'SELECT comment, comment_id, img_name\
-			FROM commentsTable'
-	cursor.execute(query)
-	return render_template('static_page.html', names=cursor, pic_name=pic_name)
 
-@app.route('/submit_comment/<pic_name>', methods=['POST', 'GET'])
-def submit_comment(pic_name=None):
-	#get comment and insert into base
-	if request.method == 'POST':
-		query = "INSERT INTO commentsTable(comment, img_name)\
-				VALUES('%s', '%s')" % (request.form['comment'], request.form['image-name'])
-		cursor.execute(query)
-		db.commit()
-		return redirect(url_for('view_comment', pic_name=pic_name))
+@app.route('/<pic_id>')
+def view_comment(pic_id):
+    query = "SELECT id, path, name FROM images WHERE id = " + pic_id + ' LIMIT 1';
+    cursor.execute(query)
+    image = cursor.fetchone()
+    query = 'SELECT c.comment, c.id FROM comments c WHERE c.image_id = ' + pic_id
+    cursor.execute(query)
+    return render_template('view_image.html', comments=cursor, image=image)
 
-@app.route('/delete_comment/<pic_name>', methods=['POST', 'GET'])
-def delete_comment(pic_name=None):
-	if request.method == 'POST':
-		query = "DELETE FROM commentsTable\
-				WHERE comment_id = '%s'" % request.form['delete_comment']
-		cursor.execute(query)
-		db.commit()
-		return redirect(url_for('view_comment', pic_name=pic_name))
 
-@app.route('/edit_comment/<pic_name>', methods=['POST', 'GET'])
-def edit_comment(pic_name=None):
-	edit_value = request.form['edit_comment']	
-	return render_template('edit_page.html', edit_value=edit_value, pic_name=pic_name)
+@app.route('/submit_comment/<pic_id>', methods=['POST', 'GET'])
+def submit_comment(pic_id):
+    # get comment and insert into base
+    if request.method == 'POST':
+        query = "INSERT INTO comments(comment, image_id)\
+				VALUES('%s', '%s')" % (request.form['comment'], pic_id)
+        cursor.execute(query)
+        db.commit()
+        return redirect(url_for('view_comment', pic_id=pic_id))
+
+
+@app.route('/delete_comment/<pic_id>', methods=['POST', 'GET'])
+def delete_comment(pic_id=None):
+    if request.method == 'POST':
+        query = "DELETE FROM comments WHERE id = '%s'" % request.form['delete_comment']
+        cursor.execute(query)
+        db.commit()
+        return redirect(url_for('view_comment', pic_id=pic_id))
+
+
+@app.route('/edit_comment/<pic_id>', methods=['POST', 'GET'])
+def edit_comment(pic_id=None):
+    edit_value = request.form['edit_comment']
+    return render_template('edit_comment.html', edit_value=edit_value, pic_id=pic_id)
+
 
 @app.route('/update_comment/<pic_name>', methods=['POST', 'GET'])
 def update_comment(pic_name=None):
-	if request.method == 'POST':
-		query = "UPDATE commentsTable\
+    if request.method == 'POST':
+        query = "UPDATE comments\
 					SET comment = '%s'\
 					WHERE comment_id = '%s' " % (request.form['new_comment'], request.form['edit_value'])
-		cursor.execute(query)
-		db.commit()
-	return redirect(url_for('view_comment', pic_name=pic_name))
+        cursor.execute(query)
+        db.commit()
+    return redirect(url_for('view_comment', pic_name=pic_name))
+
+
 @app.route('/upload_file', methods=['POST', 'GET'])
 def upload_file():
-	if request.method == 'POST':
-		f = request.files['image_upload']
-		f.save('/home/pr0phet/MyProjects/Web/static/' + f.filename)
-		query = "INSERT INTO imageTable(img_path, img_name)\
-				VALUES('%s', '%s')" % (('/static/' + f.filename), (f.filename))
-		cursor.execute(query)
-		db.commit()
-		return redirect(url_for('index'))
+    if request.method == 'POST':
+        f = request.files['image_upload']
+        f.save(app_path + images_path + f.filename)
+        query = "INSERT INTO images(path, name)\
+				VALUES('%s', '%s')" % ((images_path + f.filename), (f.filename))
+        cursor.execute(query)
+        db.commit()
+        return redirect(url_for('index'))
