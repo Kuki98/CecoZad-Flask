@@ -1,4 +1,6 @@
 #!/home/pr0phet/anaconda3/bin/python3
+import sys
+
 from flask import Flask, request, render_template, redirect, url_for
 import mysql.connector
 import os
@@ -6,11 +8,10 @@ import os
 app_path = os.getcwd()
 images_path = '/static/uploads/'
 db = mysql.connector.connect(
-    host="localhost",
+    host="127.0.0.1",
     user="root",
-    password="root",
+    password="",
     database="kuki",
-    port="23306"
 )
 cursor = db.cursor()
 
@@ -40,7 +41,7 @@ def submit_comment(pic_id):
     # get comment and insert into base
     if request.method == 'POST':
         query = "INSERT INTO comments(comment, image_id)\
-				VALUES('%s', '%s')" % (request.form['comment'], pic_id)
+                    VALUES('%s', '%s')" % (request.form['comment'], pic_id)
         cursor.execute(query)
         db.commit()
         return redirect(url_for('view_comment', pic_id=pic_id))
@@ -65,8 +66,8 @@ def edit_comment(pic_id=None):
 def update_comment(pic_name=None):
     if request.method == 'POST':
         query = "UPDATE comments\
-					SET comment = '%s'\
-					WHERE comment_id = '%s' " % (request.form['new_comment'], request.form['edit_value'])
+                    SET comment = '%s'\
+                    WHERE comment_id = '%s' " % (request.form['new_comment'], request.form['edit_value'])
         cursor.execute(query)
         db.commit()
     return redirect(url_for('view_comment', pic_name=pic_name))
@@ -74,11 +75,13 @@ def update_comment(pic_name=None):
 
 @app.route('/upload_file', methods=['POST', 'GET'])
 def upload_file():
+
     if request.method == 'POST':
         f = request.files['image_upload']
-        f.save(app_path + images_path + f.filename)
-        query = "INSERT INTO images(path, name)\
-				VALUES('%s', '%s')" % ((images_path + f.filename), (f.filename))
-        cursor.execute(query)
-        db.commit()
-        return redirect(url_for('index'))
+        if f.filename != '':
+            f.save(app_path + images_path + f.filename)
+            query = "INSERT INTO images(path, name)\
+                    VALUES('%s', '%s')" % ((images_path + f.filename), (f.filename))
+            cursor.execute(query)
+            db.commit()
+    return redirect(url_for('index'))
