@@ -43,7 +43,7 @@ def submit_comment(pic_id):
 				VALUES('%s', '%s')" % (request.form['comment'], pic_id)
         cursor.execute(query)
         db.commit()
-        return redirect(url_for('view_comment', pic_id=pic_id))
+        return '', 201
 
 
 @app.route('/delete_comment/<pic_id>', methods=['POST', 'GET'])
