@@ -7,9 +7,8 @@ images_path = '/static/uploads/'
 db = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
-    password="",
+    password="root",
     database="kuki",
-    #  removed port=23306 due unknown error
 )
 cursor = db.cursor()
 
@@ -56,8 +55,10 @@ def delete_comment(pic_id=None):
 
 @app.route('/edit_comment/<pic_id>', methods=['POST', 'GET'])
 def edit_comment(pic_id=None):
+    query = "SELECT path FROM images"
+    cursor.execute(query)
     edit_value = request.form['edit_comment']
-    return render_template('edit_comment.html', edit_value=edit_value, pic_id=pic_id)
+    return render_template('edit_comment.html', image=cursor, edit_value=edit_value, pic_id=pic_id)
 
 
 @app.route('/update_comment/<pic_id>', methods=['POST', 'GET'])
@@ -65,7 +66,7 @@ def update_comment(pic_id=None):
     if request.method == 'POST':
         query = f"UPDATE comments\
                     SET comment = '{request.form['new_comment']}'\
-                    WHERE comment_id = '{request.form['edit_value']}'"
+                    WHERE id = '{request.form['edit_value']}'"
         cursor.execute(query)
         db.commit()
     return redirect(url_for('view_comment', pic_id=pic_id))

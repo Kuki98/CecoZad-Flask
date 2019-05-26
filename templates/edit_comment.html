@@ -7,14 +7,13 @@
 <p>Picture 1</p>
 <p><a href="{{ url_for('index') }}">Browse other images</a></p>
 <div id="ImageContainer">
-    <img src="{{ pic }}" />
+    <img src="{{ image[0] }}" />
 </div>
 <div id="CommentContainer">
     <div id="CommentEnter">
-        <form action="{{ url_for('update_comment', pic_name=pic_name) }}" method="post">
+        <form action="{{ url_for('update_comment', pic_id=pic_id) }}" method="post">
             <P> New Comment:</P>
             <input type="text" name="new_comment" id="new_comment" /><br><br>
-            <input type="hidden" name="image-name" value={{ pic_name }}>
             <button type="submit" name="edit_value" value="{{ edit_value }}">Submit</button>
         </form>
     </div>
