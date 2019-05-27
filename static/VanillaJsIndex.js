@@ -2,7 +2,8 @@ document.getElementById('CommentEnter').addEventListener('submit', function (eve
     event.preventDefault();
     event.stopImmediatePropagation();
     var cnx = new XMLHttpRequest();
-    var url = location.href
+    var forms = document.getElementById('CommentEnter').getElementsByTagName('form')[0];
+    var url = forms.getAttribute('action')
     var data = document.getElementById('comment').value;
 
     cnx.open('POST', url);
