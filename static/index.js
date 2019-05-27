@@ -5,17 +5,19 @@ $(function () {
         if (!confirm('Are you sure little fucker?')) {
             return false;
         }
-        console.log('hello world');
         var data = $(this).serialize();
+        console.log(data)
         var field = $('#comment');
         var fieldValue = field.val();
         var url = $(this).attr('action');
+        console.log(url)
         var ajaxData = {
             url: url,
             data: data,
             method: 'POST',
             success: function () {
-                $('#CommentShow').append('<p>' + fieldValue + '</p>');
+                var htmlComment = '<p>' + fieldValue + '</p>'
+                $('#CommentShow').append(htmlComment);
                 field.val('');
             },
         };
@@ -24,8 +26,8 @@ $(function () {
         alert('VANKATA NE RAZBIRA JAVASCRIPTA!');
     });
 
-    var counter = 0;
-    setInterval(function () {
-        console.log(counter++);
-    }, 1000)
+//    var counter = 0;
+//    setInterval(function () {
+//        console.log(counter++);
+//    }, 1000)
 });
