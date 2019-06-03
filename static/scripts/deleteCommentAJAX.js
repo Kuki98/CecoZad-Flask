@@ -3,8 +3,6 @@ $(function () {
         event.preventDefault();
 
         var url = $(this).attr('action');
-        var buttons = $('#CommentShow form #delete-button')
-
 
         var deleteCommentId = $('#delete-button', this).val();
 
@@ -17,6 +15,7 @@ $(function () {
             method: 'POST',
             success: function(){
                 alert('Successfully deleted comment')
+
             },
         };
         console.log(ajaxData)
