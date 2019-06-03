@@ -45,12 +45,13 @@ def submit_comment(pic_id):
 
 
 @app.route('/delete_comment/<pic_id>', methods=['POST', 'GET'])
-def delete_comment(pic_id=None):
+def delete_comment(pic_id):
     if request.method == 'POST':
-        query = f"DELETE FROM comments WHERE id = '{request.form['delete_comment']}'"
+        query = f"DELETE FROM comments WHERE id = '{request.form['delete_comment_name']}'"
         cursor.execute(query)
         db.commit()
-        return redirect(url_for('view_comment', pic_id=pic_id))
+        # return redirect(url_for('view_comment', pic_id=pic_id))
+        return '', 201
 
 
 @app.route('/edit_comment/<pic_id>', methods=['POST', 'GET'])

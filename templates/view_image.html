@@ -3,8 +3,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<!--    <script src="/static/index.js"></script>-->
-</head>
+    <script src="/static/scripts/addingCommentAJAXJquery.js"></script>
+    <script src="/static/scripts/deleteCommentAJAX.js"></script>
 <body>
 <h1>Ceco Zadacha</h1>
 <p>Picture 1</p>
@@ -18,7 +18,7 @@
             <p>
                 {{ comment[0] }}
             <form action="{{ url_for('delete_comment', pic_id=image[0]) }}" method="POST">
-                <button type="submit" name="delete_comment" value={{ comment[1] }} id="delete-button">X</button>
+                <button type="submit" name="delete_comment_name" value={{ comment[1] }} id="delete-button">X</button>
             </form>
             <form action="{{ url_for('edit_comment', pic_id=image[0]) }}" method="POST">
                 <button type="submit" name="edit_comment" value={{ comment[1] }} id="edit-button">Edit</button>
@@ -36,5 +36,5 @@
     </div>
 </div>
 </body>
-<script src="/static/VanillaJsIndex.js"></script>
+<!--<script src="/static/scripts/addingCommentAJAXVanilla.js"></script>-->
 </html>
