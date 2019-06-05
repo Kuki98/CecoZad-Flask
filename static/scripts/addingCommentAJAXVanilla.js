@@ -6,11 +6,10 @@ document.getElementById('CommentEnter').addEventListener('submit', function (eve
     var url = forms.getAttribute('action')
     var commentData = document.getElementById('comment').value;
     var formData = new FormData(forms);
-
     cnx.open('POST', url);
 
     cnx.onload = function(){
-        document.getElementById('CommentShow').innerHTML += '<p>' + data + '</p>';
+        document.getElementById('CommentShow').innerHTML += '<p>' + commentData + '</p>';
     }
 
     cnx.send(formData);

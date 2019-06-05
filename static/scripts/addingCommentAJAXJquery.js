@@ -16,7 +16,7 @@ $(function () {
             data: data,
             method: 'POST',
             success: function () {
-                var htmlComment = '<p>' + fieldValue + '</p>'
+                var htmlComment = '<p>' + fieldValue + '</p>';
                 $('#CommentShow').append(htmlComment);
                 field.val('');
             },

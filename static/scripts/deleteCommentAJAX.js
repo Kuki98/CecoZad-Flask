@@ -6,6 +6,8 @@ $(function () {
 
         var deleteCommentId = $('#delete-button', this).val();
 
+//        var comment = $('#comment_id').text().trim()
+
         var data = {
             delete_comment_name:deleteCommentId
         };
@@ -14,7 +16,7 @@ $(function () {
             data: data,
             method: 'POST',
             success: function(){
-                alert('Successfully deleted comment')
+                alert('Successfully deleted comment: ' + comment)
 
             },
         };
