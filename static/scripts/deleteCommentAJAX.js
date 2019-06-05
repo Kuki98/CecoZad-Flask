@@ -16,7 +16,7 @@ $(function () {
             data: data,
             method: 'POST',
             success: function(){
-                alert('Successfully deleted comment: ' + comment)
+                alert('Successfully deleted comment: ')
 
             },
         };
