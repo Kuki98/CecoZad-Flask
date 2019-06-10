@@ -15,16 +15,12 @@
 <div id="CommentContainer">
     <div id="CommentShow">
         {% for comment in comments %}
-            <p>
-                {{ comment[0] }}
-            <form action="{{ url_for('delete_comment', pic_id=image[0]) }}" method="POST">
-                <button type="submit" name="delete_comment_name" value={{ comment[1] }} id="delete-button">X</button>
-            </form>
-            <form action="{{ url_for('edit_comment', pic_id=image[0]) }}" method="POST">
-                <button type="submit" name="edit_comment" value={{ comment[1] }} id="edit-button">Edit</button>
-            </form>
+        <form id="#commentFormId">
+            <p id="#commentId"> {{ comment[0] }}
+                <button formaction="{{ url_for('delete_comment', pic_id=image[0]) }}" formmethod="POST" value={{ comment[1] }} id="delete-button" name="delete_comment_name">x</button>
+                <button formaction="{{ url_for('edit_comment', pic_id=image[0]) }}" formmethod="POST" value={{ comment[1] }} id="edit-button" name="edit_comment">edit</button>
             </p>
-            <br>
+        </form>
         {% endfor %}
     </div>
     <div id="CommentEnter">
@@ -36,5 +32,4 @@
     </div>
 </div>
 </body>
-<!--<script src="/static/scripts/addingCommentAJAXVanilla.js"></script>-->
 </html>

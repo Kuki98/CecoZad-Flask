@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="/static/index.js"></script>
 </HEAD>
 <BODY>
 <H1> Ceco Zadacha </H1>
@@ -20,7 +19,7 @@
     <h1>Upload Image</h1>
     <form enctype="multipart/form-data" action="{{ url_for('upload_file') }}" method="POST">
         <p>File:
-            <input type="file" name="image_upload" value="image_upload" /></p>
+            <input type="file" name="image_upload" value="image_upload" id="file_id" /></p>
         <p>
             <button type="submit" name="submit_file" value="submit_file">Submit</button>
         </p>
